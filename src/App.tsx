@@ -5,7 +5,7 @@ import { Header } from '../components/Header';
 import uuid from 'uuidv4';
 
 function App(): React.ReactElement {
-  const [count, setCount] = useState(7);
+  const [count, setCount] = useState(6);
 
   return (
     <View style={styles.container}>
@@ -23,4 +23,4 @@ const styles = StyleSheet.create({
 });
 
 registerRootComponent(App);
-export default App();
+export default App;
