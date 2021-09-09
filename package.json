@@ -8,18 +8,40 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@react-navigation/stack": "^6.0.7",
+    "@typescript-eslint/parser": "^4.31.0",
     "expo": "~42.0.1",
     "expo-status-bar": "~1.0.4",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz",
-    "react-native-web": "~0.13.12"
+    "react-native-flipper": "^0.106.0",
+    "react-native-gesture-handler": "~1.10.2",
+    "react-native-web": "~0.13.12",
+    "react-navigation": "^4.4.4"
+  },
+  "prettier": {
+    "bracketSpacing": true,
+    "jsxBracketSameLine": true,
+    "singleQuote": true,
+    "trailingComma": "all",
+    "semi": true,
+    "tabWidth": 2,
+    "useTabs": false,
+    "printWidth": 140
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
-    "@types/react": "~16.9.35",
-    "@types/react-native": "~0.63.2",
-    "typescript": "~4.0.0"
+    "@react-native-community/eslint-config": "^2.0.0",
+    "@types/jest": "^27.0.1",
+    "@types/react": "^17.0.20",
+    "@types/react-native": "^0.64.13",
+    "@types/react-test-renderer": "^17.0.1",
+    "eslint": "7.14.0",
+    "prettier": "^2.3.0",
+    "ts-jest": "^27.0.5",
+    "typescript": "4.3.5",
+    "xyz": "^4.0.0"
   },
   "private": true
 }
