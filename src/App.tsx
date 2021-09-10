@@ -37,7 +37,7 @@ function App(): React.ReactElement {
     <View style={styles.container}>
       <StatusBar backgroundColor="#231d44" translucent={true} style="light" />
       <Header title="Shopping List" />
-      <AddItem title="test" addItem={addItem} />
+      <AddItem addItem={addItem} />
       <FlatList data={items} renderItem={({ item }) => <ListItem item={item} deleteItem={deleteItem} />} />
     </View>
   );
