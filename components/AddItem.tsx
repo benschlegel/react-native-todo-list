@@ -20,7 +20,15 @@ export function AddItem({ addItem }: Props): React.ReactElement {
 
   return (
     <View>
-      <TextInput placeholder="Add Item..." style={styles.input} onChangeText={onTextChange} ref={inputField} />
+      <TextInput
+        placeholder="Add Item..."
+        style={styles.input}
+        onChangeText={onTextChange}
+        ref={inputField}
+        onSubmitEditing={() => {
+          if (text.trim() !== '') submitInput(text);
+        }}
+      />
       <TouchableOpacity
         style={styles.button}
         onPress={() => {
