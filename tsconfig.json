@@ -26,6 +26,7 @@
   "include": [
     "src",
     "components",
+    "types",
     ".eslintrc.js",
     "babel.config.js"
   ],
