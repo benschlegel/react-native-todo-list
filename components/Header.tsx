@@ -30,6 +30,7 @@ const styles = StyleSheet.create({
     color: '#FFF',
     flex: 1,
     fontSize: 23,
+    fontWeight: 'bold',
     textAlign: 'center',
     justifyContent: 'center',
   },

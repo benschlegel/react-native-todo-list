@@ -23,6 +23,9 @@
     "android": {
       "package": "com.yourcompany.yourappname",
       "versionCode": 1,
+      "android": {
+        "jsEngine": "hermes"
+      },
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
