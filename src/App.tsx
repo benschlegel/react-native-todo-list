@@ -1,12 +1,14 @@
 import { registerRootComponent } from 'expo';
 import React, { useState } from 'react';
-import { StyleSheet, View, FlatList, Alert } from 'react-native';
+import { StyleSheet, View, FlatList, Alert, Platform } from 'react-native';
 import { Header } from '../components/Header';
 import { ListItem } from '../components/ListItem';
 import { AddItem } from '../components/AddItem';
 import type { ShopItem } from '../types';
 import uuid from 'uuidv4';
 import { StatusBar } from 'expo-status-bar';
+import Constants from 'expo-constants';
+import { SafeAreaView } from 'react-navigation';
 
 function App(): React.ReactElement {
   const [items, setItems] = useState<ShopItem[]>([
@@ -33,20 +35,23 @@ function App(): React.ReactElement {
     }
   };
 
+  //SafeAreaView Spaces out content below status bar
   return (
-    <View style={styles.container}>
-      <StatusBar backgroundColor="#231d44" translucent={true} style="light" />
-      <Header title="Shopping List" />
-      <AddItem addItem={addItem} />
-      <FlatList data={items} renderItem={({ item }) => <ListItem item={item} deleteItem={deleteItem} />} />
-    </View>
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={styles.container}>
+        <StatusBar backgroundColor="#231d44" translucent={true} style="light" />
+        <Header title="Shopping List" />
+        <AddItem addItem={addItem} />
+        <FlatList data={items} renderItem={({ item }) => <ListItem item={item} deleteItem={deleteItem} />} />
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 40,
+    paddingTop: Platform.OS === 'android' ? Constants.statusBarHeight : 0,
   },
 });
 
