@@ -18,9 +18,11 @@ function App(): React.ReactElement {
     { id: uuid(), text: 'Toe' },
   ]);
 
-  const deleteItem = (id: string): void => {
+  //Use useCallback()? idk
+  const deleteItem = (item: ShopItem): void => {
+    console.log(items);
     setItems((prevItems): ShopItem[] => {
-      return prevItems.filter((item: ShopItem) => item.id !== id);
+      return prevItems.filter((newItem: ShopItem) => newItem.id !== item.id);
     });
   };
 

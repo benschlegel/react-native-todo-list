@@ -3,24 +3,28 @@ import React from 'react';
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import { PanGestureHandler, PanGestureHandlerGestureEvent } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
-import Animated, { useAnimatedGestureHandler, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
+import type { ShopItem } from '../types';
+import Animated, { useAnimatedGestureHandler, useAnimatedStyle, useSharedValue, withTiming, runOnJS } from 'react-native-reanimated';
 
 interface Props {
   item: {
     id: string;
     text: string;
   };
-  deleteItem: (id: string) => void; //pass function from App.tsx
+  deleteItem: (item: ShopItem) => void; //pass function from App.tsx
 }
 
 const ItemHeight = 65; //Height of single item
 
 const { width: ScreenWidth } = Dimensions.get('window'); //gets window dimensions from react-native
 
-const DeleteXThreshold = -ScreenWidth * 0.35; //defines how much you have to swipe to delete task
+const DeleteXThreshold = -ScreenWidth * 0.3; //defines how much you have to swipe to delete task
 
 export function ListItem({ item, deleteItem }: Props): React.ReactElement {
   const translateX = useSharedValue(0); //shared between reanimated and js
+  const itemHeight = useSharedValue(ItemHeight); //Changed when task is deleted
+  const marginVertical = useSharedValue(6); //Changed when task is deleted
+  const taskOpacity = useSharedValue(1); //1 if visible, 0 if not, changes opacity to 0 on delete
 
   //Defines gesture for task
   const panGesture = useAnimatedGestureHandler<PanGestureHandlerGestureEvent>({
@@ -33,6 +37,15 @@ export function ListItem({ item, deleteItem }: Props): React.ReactElement {
       const willBeDismissed: boolean = translateX.value < DeleteXThreshold;
       if (willBeDismissed) {
         translateX.value = withTiming(-ScreenWidth);
+        itemHeight.value = withTiming(0);
+        marginVertical.value = withTiming(0);
+
+        //undefined: default user config, callback: when animation is finished
+        taskOpacity.value = withTiming(0, undefined, (isFinished) => {
+          if (isFinished) {
+            runOnJS(deleteItem)(item); //run on JS instead of UI thread
+          }
+        });
       } else {
         translateX.value = withTiming(0);
       }
@@ -53,8 +66,17 @@ export function ListItem({ item, deleteItem }: Props): React.ReactElement {
     return { opacity };
   });
 
+  //When item gets deleted, change height to adjust
+  const reanimatedTaskContainerStyle = useAnimatedStyle(() => {
+    return {
+      height: itemHeight.value,
+      marginVertical: marginVertical.value,
+      opacity: taskOpacity.value,
+    };
+  });
+
   return (
-    <View style={styles.taskContainer}>
+    <Animated.View style={[styles.taskContainer, reanimatedTaskContainerStyle]}>
       <Animated.View style={[styles.iconContainer, reanimatedIconContainerStyle]}>
         <Ionicons name={'trash-outline'} size={ItemHeight * 0.4} color={'red'} />
       </Animated.View>
@@ -63,7 +85,7 @@ export function ListItem({ item, deleteItem }: Props): React.ReactElement {
           <Text style={styles.taskTitle}>{item.text}</Text>
         </Animated.View>
       </PanGestureHandler>
-    </View>
+    </Animated.View>
   );
 }
 
@@ -71,7 +93,6 @@ const styles = StyleSheet.create({
   taskContainer: {
     width: '100%',
     alignItems: 'center',
-    marginVertical: 6,
   },
   task: {
     width: '90%',
