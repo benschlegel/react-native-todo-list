@@ -7,7 +7,7 @@ interface Props {
   addItem: (text: string) => void;
 }
 
-export function AddItem({ addItem }: Props): React.ReactElement {
+export function InputItem({ addItem }: Props): React.ReactElement {
   const [text, setText] = useState('');
   const inputField = useRef<null | TextInput>(null);
 
@@ -20,9 +20,10 @@ export function AddItem({ addItem }: Props): React.ReactElement {
   };
 
   return (
-    <View>
+    <View style={styles.bottom}>
       <TextInput
         placeholder="Add Item..."
+        placeholderTextColor="#FFF"
         style={styles.input}
         onChangeText={onTextChange}
         ref={inputField}
@@ -30,16 +31,6 @@ export function AddItem({ addItem }: Props): React.ReactElement {
           if (text.trim() !== '') submitInput(text);
         }}
       />
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => {
-          submitInput(text);
-        }}>
-        <Text style={styles.buttonText}>
-          <Ionicons name="add-circle" size={20} />
-          Add Item
-        </Text>
-      </TouchableOpacity>
     </View>
   );
 }
@@ -50,14 +41,11 @@ const styles = StyleSheet.create({
     padding: 8,
     fontSize: 16,
   },
-  button: {
-    backgroundColor: '#c2bad8',
-    padding: 9,
-    margin: 5,
-  },
-  buttonText: {
-    color: 'darkslateblue',
-    fontSize: 20,
-    textAlign: 'center',
+  bottom: {
+    borderTopStartRadius: 12,
+    borderTopEndRadius: 12,
+    flex: 0.1,
+    backgroundColor: '#322775',
+    justifyContent: 'flex-end',
   },
 });

@@ -30,7 +30,7 @@
       }
     },
     "androidNavigationBar": {
-     "backgroundColor": "#f8f8f8"
+     "backgroundColor": "#322775"
    },
     "web": {
       "favicon": "./assets/favicon.png"

@@ -1,9 +1,10 @@
 import { registerRootComponent } from 'expo';
 import React, { useState, useRef } from 'react';
-import { StyleSheet, View, Alert, Platform } from 'react-native';
+import { StyleSheet, View, Alert, Platform, Text } from 'react-native';
 import { Header } from '../components/Header';
 import { ListItem } from '../components/ListItem';
 import { AddItem } from '../components/AddItem';
+import { InputItem } from '../components/InputItem';
 import type { ShopItem } from '../types';
 import uuid from 'uuidv4';
 import { StatusBar } from 'expo-status-bar';
@@ -51,6 +52,7 @@ function App(): React.ReactElement {
             <ListItem key={item.id} simultaneousHandlers={scrollRef} item={item} deleteItem={deleteItem} />
           ))}
         </ScrollView>
+        <InputItem addItem={addItem} />
       </View>
     </SafeAreaView>
   );
