@@ -16,7 +16,7 @@ module.exports = {
   rules: {
     // eslint
     semi: 'off',
-    curly: ['warn', 'multi-or-nest', 'consistent'],
+    curly: 'off', //['warn', 'multi-or-nest', 'consistent'],
     'no-mixed-spaces-and-tabs': ['warn', 'smart-tabs'],
     'no-async-promise-executor': 'warn',
     'require-await': 'warn',
