@@ -43,7 +43,7 @@ function App(): React.ReactElement {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
-        <StatusBar backgroundColor="#231d44" translucent={true} style="light" />
+        <StatusBar backgroundColor="darkslateblue" translucent={true} style="light" />
         <Header title="Shopping List" />
         <AddItem addItem={addItem} />
         <ScrollView ref={scrollRef} style={{ flex: 1 }}>
