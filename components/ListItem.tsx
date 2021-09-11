@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
-import { Dimensions, StyleSheet, Text, View } from 'react-native';
-import { PanGestureHandler, PanGestureHandlerGestureEvent } from 'react-native-gesture-handler';
+import { Dimensions, StyleSheet, Text } from 'react-native';
+import { PanGestureHandler, PanGestureHandlerGestureEvent, PanGestureHandlerProps } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
 import type { ShopItem } from '../types';
 import Animated, { useAnimatedGestureHandler, useAnimatedStyle, useSharedValue, withTiming, runOnJS } from 'react-native-reanimated';
 
-interface Props {
+interface Props extends Pick<PanGestureHandlerProps, 'simultaneousHandlers'> {
   item: {
     id: string;
     text: string;
@@ -20,7 +20,7 @@ const { width: ScreenWidth } = Dimensions.get('window'); //gets window dimension
 
 const DeleteXThreshold = -ScreenWidth * 0.3; //defines how much you have to swipe to delete task
 
-export function ListItem({ item, deleteItem }: Props): React.ReactElement {
+export function ListItem({ item, deleteItem, simultaneousHandlers }: Props): React.ReactElement {
   const translateX = useSharedValue(0); //shared between reanimated and js
   const itemHeight = useSharedValue(ItemHeight); //Changed when task is deleted
   const marginVertical = useSharedValue(6); //Changed when task is deleted
@@ -80,7 +80,7 @@ export function ListItem({ item, deleteItem }: Props): React.ReactElement {
       <Animated.View style={[styles.iconContainer, reanimatedIconContainerStyle]}>
         <Ionicons name={'trash-outline'} size={ItemHeight * 0.4} color={'red'} />
       </Animated.View>
-      <PanGestureHandler onGestureEvent={panGesture}>
+      <PanGestureHandler simultaneousHandlers={simultaneousHandlers} onGestureEvent={panGesture}>
         <Animated.View style={[styles.task, reanimatedStyle]}>
           <Text style={styles.taskTitle}>{item.text}</Text>
         </Animated.View>

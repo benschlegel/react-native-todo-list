@@ -1,5 +1,5 @@
 import { registerRootComponent } from 'expo';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { StyleSheet, View, FlatList, Alert, Platform } from 'react-native';
 import { Header } from '../components/Header';
 import { ListItem } from '../components/ListItem';
@@ -9,6 +9,7 @@ import uuid from 'uuidv4';
 import { StatusBar } from 'expo-status-bar';
 import Constants from 'expo-constants';
 import { SafeAreaView } from 'react-navigation';
+import { ScrollView } from 'react-native-gesture-handler';
 
 function App(): React.ReactElement {
   const [items, setItems] = useState<ShopItem[]>([
@@ -18,9 +19,10 @@ function App(): React.ReactElement {
     { id: uuid(), text: 'Toe' },
   ]);
 
+  const scrollRef = useRef(null);
+
   //Use useCallback()? idk
   const deleteItem = (item: ShopItem): void => {
-    console.log(items);
     setItems((prevItems): ShopItem[] => {
       return prevItems.filter((newItem: ShopItem) => newItem.id !== item.id);
     });
@@ -44,7 +46,11 @@ function App(): React.ReactElement {
         <StatusBar backgroundColor="#231d44" translucent={true} style="light" />
         <Header title="Shopping List" />
         <AddItem addItem={addItem} />
-        <FlatList data={items} renderItem={({ item }) => <ListItem item={item} deleteItem={deleteItem} />} />
+        <ScrollView ref={scrollRef} style={{ flex: 1 }}>
+          {items.map((item) => (
+            <ListItem key={item.id} simultaneousHandlers={scrollRef} item={item} deleteItem={deleteItem} />
+          ))}
+        </ScrollView>
       </View>
     </SafeAreaView>
   );
