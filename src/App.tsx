@@ -51,6 +51,7 @@ function App(): React.ReactElement {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#f8f8f8',
     paddingTop: Platform.OS === 'android' ? Constants.statusBarHeight : 0,
   },
 });
