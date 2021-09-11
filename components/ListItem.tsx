@@ -48,11 +48,16 @@ export function ListItem({ item, deleteItem }: Props): React.ReactElement {
     ],
   }));
 
+  const reanimatedIconContainerStyle = useAnimatedStyle(() => {
+    const opacity = withTiming(translateX.value < DeleteXThreshold ? 1 : 0);
+    return { opacity };
+  });
+
   return (
     <View style={styles.taskContainer}>
-      <View style={styles.iconContainer}>
+      <Animated.View style={[styles.iconContainer, reanimatedIconContainerStyle]}>
         <Ionicons name={'trash-outline'} size={ItemHeight * 0.4} color={'red'} />
-      </View>
+      </Animated.View>
       <PanGestureHandler onGestureEvent={panGesture}>
         <Animated.View style={[styles.task, reanimatedStyle]}>
           <Text style={styles.taskTitle}>{item.text}</Text>
