@@ -63,7 +63,7 @@ module.exports = {
     // react native plugin
     'react-native/no-unused-styles': 'warn',
     'react-native/split-platform-components': 'off',
-    'react-native/no-inline-styles': 'warn',
+    'react-native/no-inline-styles': 'off',
     'react-native/no-color-literals': 'off',
     'react-native/no-raw-text': 'off',
     'react-native/no-single-element-style-arrays': 'warn',
