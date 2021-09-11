@@ -1,6 +1,6 @@
 import { registerRootComponent } from 'expo';
 import React, { useState, useRef } from 'react';
-import { StyleSheet, View, FlatList, Alert, Platform } from 'react-native';
+import { StyleSheet, View, Alert, Platform } from 'react-native';
 import { Header } from '../components/Header';
 import { ListItem } from '../components/ListItem';
 import { AddItem } from '../components/AddItem';
