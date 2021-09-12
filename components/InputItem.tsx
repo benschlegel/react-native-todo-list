@@ -66,12 +66,12 @@ export function InputItem({ addItem }: Props): React.ReactElement {
     };
   });
 
-  //Minimize Icon press event
-  const minimizePressed = (): void => {
+  //Changes to expand with keyboard or remove it
+  const toggleInputSize = (): void => {
     if (isMaximized) {
       inputExpandAnimation.value = withTiming(0);
-      Keyboard.dismiss();
       setIsMaximized(false);
+      Keyboard.dismiss();
     } else {
       inputExpandAnimation.value = withTiming(90);
       inputField?.current?.focus();
@@ -79,15 +79,10 @@ export function InputItem({ addItem }: Props): React.ReactElement {
     }
   };
 
-  const onKeyboardDidHide = (event: Event): void => {
-    //console.log('keyboard gone');
-    inputExpandAnimation.value = withTiming(0);
-  };
-
   return (
     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.containerBottom}>
       <Animated.View style={[styles.icon, animationStyle]}>
-        <Ionicons name={'chevron-forward-outline'} size={28} color={'#c2bad8'} onPress={minimizePressed} />
+        <Ionicons name={'chevron-forward-outline'} size={28} color={'#c2bad8'} onPress={toggleInputSize} />
       </Animated.View>
       <View style={styles.inputContainer}>
         <TextInput
