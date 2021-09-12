@@ -46,14 +46,19 @@ export function InputItem({ addItem }: Props): React.ReactElement {
   });
 
   const minimizePressed = (): void => {
+    console.log('pressed');
     if (isMaximized) {
       animation.value = withTiming(0);
       Keyboard.dismiss();
+    } else {
+      animation.value = withTiming(90);
+      inputField?.current?.focus();
+      setIsMaximized(true);
     }
   };
 
   const onKeyboardDidHide = (event: Event): void => {
-    console.log('keyboard gone');
+    //console.log('keyboard gone');
     animation.value = withTiming(0);
   };
 
