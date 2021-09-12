@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useRef } from 'react';
-import { StyleSheet, Text, View, KeyboardAvoidingView, TextInput, TouchableOpacity, Platform } from 'react-native';
+import { StyleSheet, Text, View, KeyboardAvoidingView, TextInput, Keyboard, Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import changeNavigationBarColor from 'react-native-navigation-bar-color';
 
@@ -23,9 +23,14 @@ export function InputItem({ addItem }: Props): React.ReactElement {
     addItem(inputText);
   };
 
+  const minimizePressed = (): void => {
+    console.log('test');
+    Keyboard.dismiss();
+  };
+
   return (
     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.containerBottom}>
-      <Ionicons name={'chevron-forward-outline'} size={28} color={'#c2bad8'} style={styles.icon} />
+      <Ionicons name={'chevron-forward-outline'} size={28} color={'#c2bad8'} style={styles.icon} onPress={minimizePressed} />
       <View style={styles.inputContainer}>
         <TextInput
           placeholder="Add Item..."
