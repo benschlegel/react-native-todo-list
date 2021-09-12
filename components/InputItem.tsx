@@ -52,6 +52,11 @@ export function InputItem({ addItem }: Props): React.ReactElement {
     }
   };
 
+  const onKeyboardDidHide = (event: Event): void => {
+    console.log('keyboard gone');
+    animation.value = withTiming(0);
+  };
+
   return (
     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.containerBottom}>
       <Animated.View style={[styles.icon, animationStyle]}>
@@ -63,6 +68,7 @@ export function InputItem({ addItem }: Props): React.ReactElement {
           selectionColor={'#c2bad8'}
           placeholderTextColor="#c2bad8"
           onFocus={() => {
+            Keyboard.addListener('keyboardDidHide', onKeyboardDidHide);
             animation.value = withTiming(90);
             setIsMaximized(true);
           }}
@@ -70,6 +76,7 @@ export function InputItem({ addItem }: Props): React.ReactElement {
             //on focus loss
             animation.value = withTiming(0);
             setIsMaximized(false);
+            Keyboard.removeAllListeners('keyboardDidHide');
           }}
           style={styles.input}
           onChangeText={onTextChange}
