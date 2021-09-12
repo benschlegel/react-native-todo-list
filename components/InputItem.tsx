@@ -2,7 +2,7 @@
 import React, { useState, useRef } from 'react';
 import { StyleSheet, Text, View, KeyboardAvoidingView, TextInput, Keyboard, Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import changeNavigationBarColor from 'react-native-navigation-bar-color';
+import SystemNavigationBar from 'react-native-system-navigation-bar';
 
 interface Props {
   addItem: (text: string) => void;
@@ -24,6 +24,12 @@ export function InputItem({ addItem }: Props): React.ReactElement {
   };
 
   const minimizePressed = (): void => {
+    // const show = async (): Promise<void> => {
+    //   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    //   const result: Promise<void> = await SystemNavigationBar.navigationShow();
+
+    //   console.log('Show: ', result); //true or Error Message
+    // };
     console.log('test');
     Keyboard.dismiss();
   };

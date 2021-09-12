@@ -3,7 +3,6 @@ import React, { useState, useRef } from 'react';
 import { StyleSheet, View, Alert, Platform, Text } from 'react-native';
 import { Header } from '../components/Header';
 import { ListItem } from '../components/ListItem';
-import { AddItem } from '../components/AddItem';
 import { InputItem } from '../components/InputItem';
 import type { ShopItem } from '../types';
 import uuid from 'uuidv4';
