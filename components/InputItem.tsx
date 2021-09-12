@@ -28,6 +28,7 @@ export function InputItem({ addItem }: Props): React.ReactElement {
       <View style={styles.inputContainer}>
         <TextInput
           placeholder="Add Item..."
+          selectionColor={'#c2bad8'}
           placeholderTextColor="#c2bad8"
           style={styles.input}
           onChangeText={onTextChange}
@@ -50,7 +51,7 @@ const styles = StyleSheet.create({
   input: {
     marginLeft: 5,
     height: 60,
-    paddingBottom: 30,
+    paddingBottom: 24,
     fontSize: 16,
     color: '#c2bad8',
   },
@@ -64,6 +65,8 @@ const styles = StyleSheet.create({
     // borderRadius: 8,
     // borderColor: '#FFF',
     // borderWidth: 2,
+    borderBottomColor: '#FFF',
+    borderBottomWidth: 2,
   },
   containerBottom: {
     borderTopStartRadius: 12,
