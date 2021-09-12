@@ -13,17 +13,20 @@ import Animated, {
 } from 'react-native-reanimated';
 import SystemNavigationBar from 'react-native-system-navigation-bar';
 
+//Props being passed to component
 interface Props {
   addItem: (text: string) => void;
 }
 
+//Main component
 export function InputItem({ addItem }: Props): React.ReactElement {
-  const [text, setText] = useState('');
-  const [isMaximized, setIsMaximized] = useState(false);
-  const inputField = useRef<null | TextInput>(null);
-  const animation = useSharedValue(0);
+  const [text, setText] = useState(''); //Text in input field
+  const [isMaximized, setIsMaximized] = useState(false); //If input field is expanded or not
+  const inputField = useRef<null | TextInput>(null); //Reference to inputField component (useful for e.g. focusing component)
+  const inputExpandAnimation = useSharedValue(0);
+  //Used to smoothly interpolate rotation of icon/view
   const minimizeIconRotation = useDerivedValue(() => {
-    return interpolate(animation.value, [0, 360], [0, 360]);
+    return interpolate(inputExpandAnimation.value, [0, 360], [0, 360]);
   });
 
   const onTextChange = (newText: string): void => setText(newText);
@@ -35,6 +38,7 @@ export function InputItem({ addItem }: Props): React.ReactElement {
     addItem(inputText);
   };
 
+  //Changes rotation of icon/view according to minimizeIconRotation
   const animationStyle = useAnimatedStyle(() => {
     return {
       transform: [
@@ -45,13 +49,14 @@ export function InputItem({ addItem }: Props): React.ReactElement {
     };
   });
 
+  //Minimize Icon press event
   const minimizePressed = (): void => {
     console.log('pressed');
     if (isMaximized) {
-      animation.value = withTiming(0);
+      inputExpandAnimation.value = withTiming(0);
       Keyboard.dismiss();
     } else {
-      animation.value = withTiming(90);
+      inputExpandAnimation.value = withTiming(90);
       inputField?.current?.focus();
       setIsMaximized(true);
     }
@@ -59,7 +64,7 @@ export function InputItem({ addItem }: Props): React.ReactElement {
 
   const onKeyboardDidHide = (event: Event): void => {
     //console.log('keyboard gone');
-    animation.value = withTiming(0);
+    inputExpandAnimation.value = withTiming(0);
   };
 
   return (
@@ -74,12 +79,12 @@ export function InputItem({ addItem }: Props): React.ReactElement {
           placeholderTextColor="#c2bad8"
           onFocus={() => {
             Keyboard.addListener('keyboardDidHide', onKeyboardDidHide);
-            animation.value = withTiming(90);
+            inputExpandAnimation.value = withTiming(90);
             setIsMaximized(true);
           }}
           onBlur={() => {
             //on focus loss
-            animation.value = withTiming(0);
+            inputExpandAnimation.value = withTiming(0);
             setIsMaximized(false);
             Keyboard.removeAllListeners('keyboardDidHide');
           }}
