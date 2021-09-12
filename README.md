@@ -1,7 +1,7 @@
 <div align="center">
   <h1><img align="center" src="./images/icon.png" width="50"/> SimpleList</h1>
   <h2>A clean and simple Todo/Shopping list powered by <a href='https://github.com/software-mansion/react-native-reanimated'>Reanimated</a> 🚀
-  <br/><br/><img src="./images/preview.png" width="280" alt="Preview"/></h2>  
+  <br/><br/><img src="./images/preview.png" width="280" alt="Preview"/></h2>
 </div>
 
 ## 📥 Local installation
@@ -41,6 +41,13 @@ This app is a managed expo typescript project (created with `expo init`).
 * **📁`types`:** Contains global types (mainly `Item` interface).
 
   * *📄`index.d.ts`:* Global types/interfaces and styles.
+
+---
+* **📁`other`:** Configuration files
+
+  * *📄`.eslintrc.js`:* Contains eslint config for project
+
+  * *📄`app.json`:* Defines `expo`-configuration like `entryPoint`, `jsEngine`, app name etc.
 
 
 
