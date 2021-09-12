@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState, useRef } from 'react';
-import { StyleSheet, Text, View, KeyboardAvoidingView, TextInput, Keyboard, Platform } from 'react-native';
+import React, { useState, useRef, Component, useEffect } from 'react';
+import { StyleSheet, View, KeyboardAvoidingView, TextInput, Keyboard, Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Animated, {
   useAnimatedGestureHandler,
@@ -29,6 +29,23 @@ export function InputItem({ addItem }: Props): React.ReactElement {
     return interpolate(inputExpandAnimation.value, [0, 360], [0, 360]);
   });
 
+  //When component is loaded, add listeners
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
+      setIsMaximized(true);
+      inputExpandAnimation.value = withTiming(90);
+    });
+    const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
+      setIsMaximized(false);
+      inputExpandAnimation.value = withTiming(0);
+    });
+
+    return () => {
+      keyboardDidHideListener.remove();
+      keyboardDidShowListener.remove();
+    };
+  }, [inputExpandAnimation]);
+
   const onTextChange = (newText: string): void => setText(newText);
 
   const submitInput = (inputText: string): void => {
@@ -51,7 +68,6 @@ export function InputItem({ addItem }: Props): React.ReactElement {
 
   //Minimize Icon press event
   const minimizePressed = (): void => {
-    console.log('pressed');
     if (isMaximized) {
       inputExpandAnimation.value = withTiming(0);
       Keyboard.dismiss();
