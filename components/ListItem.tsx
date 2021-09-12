@@ -3,7 +3,7 @@ import React from 'react';
 import { Dimensions, StyleSheet, Text } from 'react-native';
 import { PanGestureHandler, PanGestureHandlerGestureEvent, PanGestureHandlerProps } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
-import type { ShopItem } from '../types';
+import type { Item } from '../types';
 import Animated, { useAnimatedGestureHandler, useAnimatedStyle, useSharedValue, withTiming, runOnJS } from 'react-native-reanimated';
 
 interface Props extends Pick<PanGestureHandlerProps, 'simultaneousHandlers'> {
@@ -11,7 +11,7 @@ interface Props extends Pick<PanGestureHandlerProps, 'simultaneousHandlers'> {
     id: string;
     text: string;
   };
-  deleteItem: (item: ShopItem) => void; //pass function from App.tsx
+  deleteItem: (item: Item) => void; //pass function from App.tsx
 }
 
 const ItemHeight = 65; //Height of single item

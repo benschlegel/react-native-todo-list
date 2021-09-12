@@ -19,7 +19,7 @@ interface Props {
 }
 
 //Main component
-export function InputItem({ addItem }: Props): React.ReactElement {
+export function Input({ addItem }: Props): React.ReactElement {
   const [text, setText] = useState(''); //Text in input field
   const [isMaximized, setIsMaximized] = useState(false); //If input field is expanded or not
   const inputField = useRef<null | TextInput>(null); //Reference to inputField component (useful for e.g. focusing component)

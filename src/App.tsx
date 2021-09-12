@@ -3,8 +3,8 @@ import React, { useState, useRef } from 'react';
 import { StyleSheet, View, Alert, Platform, Text } from 'react-native';
 import { Header } from '../components/Header';
 import { ListItem } from '../components/ListItem';
-import { InputItem } from '../components/InputItem';
-import type { ShopItem } from '../types';
+import { Input } from '../components/Input';
+import type { Item } from '../types';
 import uuid from 'uuidv4';
 import { StatusBar } from 'expo-status-bar';
 import Constants from 'expo-constants';
@@ -12,7 +12,7 @@ import { SafeAreaView } from 'react-navigation';
 import { ScrollView } from 'react-native-gesture-handler';
 
 function App(): React.ReactElement {
-  const [items, setItems] = useState<ShopItem[]>([
+  const [items, setItems] = useState<Item[]>([
     { id: uuid(), text: 'Milk' },
     { id: uuid(), text: 'Apl' },
     { id: uuid(), text: 'Eg' },
@@ -22,9 +22,9 @@ function App(): React.ReactElement {
   const scrollRef = useRef(null);
 
   //Use useCallback()? idk
-  const deleteItem = (item: ShopItem): void => {
-    setItems((prevItems): ShopItem[] => {
-      return prevItems.filter((newItem: ShopItem) => newItem.id !== item.id);
+  const deleteItem = (item: Item): void => {
+    setItems((prevItems): Item[] => {
+      return prevItems.filter((newItem: Item) => newItem.id !== item.id);
     });
   };
 
@@ -33,7 +33,7 @@ function App(): React.ReactElement {
       Alert.alert('Error', 'Please enter an item', [{ text: 'ok' }]);
     } else {
       text = text.trim();
-      setItems((prevItems): ShopItem[] => {
+      setItems((prevItems: Item[]): Item[] => {
         return [{ id: uuid(), text }, ...prevItems]; //text <=> text: text, ...prevItems appends items that were in list before
       });
     }
@@ -50,7 +50,7 @@ function App(): React.ReactElement {
             <ListItem key={item.id} simultaneousHandlers={scrollRef} item={item} deleteItem={deleteItem} />
           ))}
         </ScrollView>
-        <InputItem addItem={addItem} />
+        <Input addItem={addItem} />
       </View>
     </SafeAreaView>
   );
