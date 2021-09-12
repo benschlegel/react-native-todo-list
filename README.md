@@ -2,7 +2,6 @@
   <h1><img align="center" src="./images/icon.png" width="50"/> SimpleList</h1>
 </div>
 
-<br/>
 
 <div align="center">
 <h2>
