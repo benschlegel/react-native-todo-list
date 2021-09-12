@@ -18,6 +18,7 @@ export function InputItem({ addItem }: Props): React.ReactElement {
 
   const submitInput = (inputText: string): void => {
     setText('');
+    inputField?.current?.focus();
     inputField?.current?.clear();
     addItem(inputText);
   };
@@ -33,6 +34,7 @@ export function InputItem({ addItem }: Props): React.ReactElement {
           style={styles.input}
           onChangeText={onTextChange}
           ref={inputField}
+          blurOnSubmit={false}
           onSubmitEditing={() => {
             if (text.trim() !== '') submitInput(text);
           }}
@@ -54,6 +56,8 @@ const styles = StyleSheet.create({
     paddingBottom: 24,
     fontSize: 16,
     color: '#c2bad8',
+    borderBottomColor: '#c2bad8',
+    borderBottomWidth: 2,
   },
   inputContainer: {
     height: 50,
@@ -65,8 +69,6 @@ const styles = StyleSheet.create({
     // borderRadius: 8,
     // borderColor: '#FFF',
     // borderWidth: 2,
-    borderBottomColor: '#FFF',
-    borderBottomWidth: 2,
   },
   containerBottom: {
     borderTopStartRadius: 12,
