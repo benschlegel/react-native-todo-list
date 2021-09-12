@@ -82,7 +82,9 @@ export function ListItem({ item, deleteItem, simultaneousHandlers }: Props): Rea
       </Animated.View>
       <PanGestureHandler simultaneousHandlers={simultaneousHandlers} onGestureEvent={panGesture}>
         <Animated.View style={[styles.task, reanimatedStyle]}>
-          <Text style={styles.taskTitle}>{item.text}</Text>
+          <Text adjustsFontSizeToFit style={styles.taskTitle}>
+            {item.text}
+          </Text>
         </Animated.View>
       </PanGestureHandler>
     </Animated.View>
