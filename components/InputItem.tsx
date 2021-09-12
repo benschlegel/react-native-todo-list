@@ -2,6 +2,15 @@
 import React, { useState, useRef } from 'react';
 import { StyleSheet, Text, View, KeyboardAvoidingView, TextInput, Keyboard, Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import Animated, {
+  useAnimatedGestureHandler,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+  runOnJS,
+  useDerivedValue,
+  interpolate,
+} from 'react-native-reanimated';
 import SystemNavigationBar from 'react-native-system-navigation-bar';
 
 interface Props {
@@ -9,10 +18,13 @@ interface Props {
 }
 
 export function InputItem({ addItem }: Props): React.ReactElement {
-  //changeNavigationBarColor('#80b3ff', true, true); //crashes
-
   const [text, setText] = useState('');
+  const [isMaximized, setIsMaximized] = useState(false);
   const inputField = useRef<null | TextInput>(null);
+  const animation = useSharedValue(0);
+  const minimizeIconRotation = useDerivedValue(() => {
+    return interpolate(animation.value, [0, 360], [0, 360]);
+  });
 
   const onTextChange = (newText: string): void => setText(newText);
 
@@ -23,25 +35,42 @@ export function InputItem({ addItem }: Props): React.ReactElement {
     addItem(inputText);
   };
 
-  const minimizePressed = (): void => {
-    // const show = async (): Promise<void> => {
-    //   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    //   const result: Promise<void> = await SystemNavigationBar.navigationShow();
+  const animationStyle = useAnimatedStyle(() => {
+    return {
+      transform: [
+        {
+          rotate: minimizeIconRotation.value + 'deg',
+        },
+      ],
+    };
+  });
 
-    //   console.log('Show: ', result); //true or Error Message
-    // };
-    console.log('test');
-    Keyboard.dismiss();
+  const minimizePressed = (): void => {
+    if (isMaximized) {
+      animation.value = withTiming(0);
+      Keyboard.dismiss();
+    }
   };
 
   return (
     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.containerBottom}>
-      <Ionicons name={'chevron-forward-outline'} size={28} color={'#c2bad8'} style={styles.icon} onPress={minimizePressed} />
+      <Animated.View style={[styles.icon, animationStyle]}>
+        <Ionicons name={'chevron-forward-outline'} size={28} color={'#c2bad8'} onPress={minimizePressed} />
+      </Animated.View>
       <View style={styles.inputContainer}>
         <TextInput
           placeholder="Add Item..."
           selectionColor={'#c2bad8'}
           placeholderTextColor="#c2bad8"
+          onFocus={() => {
+            animation.value = withTiming(90);
+            setIsMaximized(true);
+          }}
+          onBlur={() => {
+            //on focus loss
+            animation.value = withTiming(0);
+            setIsMaximized(false);
+          }}
           style={styles.input}
           onChangeText={onTextChange}
           ref={inputField}
