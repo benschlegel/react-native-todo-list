@@ -71,6 +71,7 @@ export function InputItem({ addItem }: Props): React.ReactElement {
     if (isMaximized) {
       inputExpandAnimation.value = withTiming(0);
       Keyboard.dismiss();
+      setIsMaximized(false);
     } else {
       inputExpandAnimation.value = withTiming(90);
       inputField?.current?.focus();
@@ -93,17 +94,6 @@ export function InputItem({ addItem }: Props): React.ReactElement {
           placeholder="Add Item..."
           selectionColor={'#c2bad8'}
           placeholderTextColor="#c2bad8"
-          onFocus={() => {
-            Keyboard.addListener('keyboardDidHide', onKeyboardDidHide);
-            inputExpandAnimation.value = withTiming(90);
-            setIsMaximized(true);
-          }}
-          onBlur={() => {
-            //on focus loss
-            inputExpandAnimation.value = withTiming(0);
-            setIsMaximized(false);
-            Keyboard.removeAllListeners('keyboardDidHide');
-          }}
           style={styles.input}
           onChangeText={onTextChange}
           ref={inputField}
