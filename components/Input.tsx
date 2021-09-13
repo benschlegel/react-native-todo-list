@@ -74,8 +74,8 @@ export function Input({ addItem }: Props): React.ReactElement {
       Keyboard.dismiss();
     } else {
       inputExpandAnimation.value = withTiming(90);
-      inputField?.current?.focus();
       setIsMaximized(true);
+      inputField?.current?.focus();
     }
   };
 
