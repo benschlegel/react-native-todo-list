@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
-import { Dimensions, StyleSheet, Text } from 'react-native';
+import { Dimensions, LayoutAnimation, StyleSheet, Text } from 'react-native';
 import { PanGestureHandler, PanGestureHandlerGestureEvent, PanGestureHandlerProps } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
 import type { Item } from '../types';
@@ -25,6 +25,7 @@ export function ListItem({ item, deleteItem, simultaneousHandlers }: Props): Rea
   const itemHeight = useSharedValue(ItemHeight); //Changed when task is deleted
   const marginVertical = useSharedValue(6); //Changed when task is deleted
   const taskOpacity = useSharedValue(1); //1 if visible, 0 if not, changes opacity to 0 on delete
+  const iconOpacity = useSharedValue(0); //1 if visible, 0 if not, changes opacity to 0 on delete
 
   //Defines gesture for task
   const panGesture = useAnimatedGestureHandler<PanGestureHandlerGestureEvent>({
@@ -37,11 +38,13 @@ export function ListItem({ item, deleteItem, simultaneousHandlers }: Props): Rea
       const willBeDismissed: boolean = translateX.value < DeleteXThreshold;
       if (willBeDismissed) {
         translateX.value = withTiming(-ScreenWidth);
+        //TODO: use LayoutAnimation
         itemHeight.value = withTiming(0);
         marginVertical.value = withTiming(0);
 
         //undefined: default user config, callback: when animation is finished
         taskOpacity.value = withTiming(0, undefined, (isFinished) => {
+          iconOpacity.value = withTiming(0, { duration: 50 });
           if (isFinished) {
             runOnJS(deleteItem)(item); //run on JS instead of UI thread
           }
@@ -53,17 +56,25 @@ export function ListItem({ item, deleteItem, simultaneousHandlers }: Props): Rea
   });
 
   //Animates the x value of task
-  const reanimatedStyle = useAnimatedStyle(() => ({
-    transform: [
-      {
-        translateX: translateX.value,
-      },
-    ],
-  }));
+  const reanimatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [
+        {
+          translateX: translateX.value,
+        },
+      ],
+    };
+  });
 
   const reanimatedIconContainerStyle = useAnimatedStyle(() => {
-    const opacity = withTiming(translateX.value < DeleteXThreshold ? 1 : 0);
-    return { opacity };
+    iconOpacity.value = withTiming(translateX.value < DeleteXThreshold ? 0.6 : 0);
+    return {
+      opacity: iconOpacity.value,
+      transform: [{ translateX: translateX.value + ScreenWidth }],
+      backgroundColor: '#FF6961',
+      borderBottomEndRadius: 6,
+      borderTopEndRadius: 6,
+    };
   });
 
   //When item gets deleted, change height to adjust
@@ -80,6 +91,7 @@ export function ListItem({ item, deleteItem, simultaneousHandlers }: Props): Rea
       <Animated.View style={[styles.iconContainer, reanimatedIconContainerStyle]}>
         <Ionicons name={'trash-outline'} size={ItemHeight * 0.4} color={'red'} />
       </Animated.View>
+
       <PanGestureHandler simultaneousHandlers={simultaneousHandlers} onGestureEvent={panGesture}>
         <Animated.View style={[styles.task, reanimatedStyle]}>
           <Text adjustsFontSizeToFit style={styles.taskTitle}>
@@ -117,10 +129,11 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     height: ItemHeight,
-    width: ItemHeight,
+    minWidth: ScreenWidth * 1.08,
+    paddingStart: 60,
     position: 'absolute',
     right: '10%',
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'flex-start',
   },
 });
