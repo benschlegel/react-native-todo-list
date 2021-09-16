@@ -8,8 +8,9 @@ import type { Item } from '../types';
 import uuid from 'uuidv4';
 import { StatusBar } from 'expo-status-bar';
 import Constants from 'expo-constants';
-import { SafeAreaView } from 'react-navigation';
+//import { SafeAreaView } from 'react-navigation';
 import { ScrollView } from 'react-native-gesture-handler';
+import { SafeAreaProvider, SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
 function App(): React.ReactElement {
   const [items, setItems] = useState<Item[]>([
@@ -41,18 +42,20 @@ function App(): React.ReactElement {
 
   //SafeAreaView Spaces out content below status bar
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <View style={styles.container}>
-        <StatusBar backgroundColor="darkslateblue" translucent={true} style="light" />
-        <Header title="Shopping List" />
-        <ScrollView ref={scrollRef} style={{ flex: 1, marginTop: 24 }}>
-          {items.map((item) => (
-            <ListItem key={item.id} simultaneousHandlers={scrollRef} item={item} deleteItem={deleteItem} />
-          ))}
-        </ScrollView>
-        <Input addItem={addItem} />
-      </View>
-    </SafeAreaView>
+    <SafeAreaProvider>
+      <SafeAreaView style={{ flex: 1 }} edges={['left', 'right']}>
+        <View style={styles.container}>
+          <StatusBar backgroundColor="darkslateblue" translucent={true} style="light" />
+          <Header title="Shopping List" />
+          <ScrollView ref={scrollRef} style={{ flex: 1, marginTop: 24 }}>
+            {items.map((item) => (
+              <ListItem key={item.id} simultaneousHandlers={scrollRef} item={item} deleteItem={deleteItem} />
+            ))}
+          </ScrollView>
+          <Input addItem={addItem} />
+        </View>
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
 }
 
