@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { registerRootComponent } from 'expo';
 import React, { useState, useRef } from 'react';
 import { StyleSheet, View, Alert, Platform, Text } from 'react-native';
@@ -11,6 +12,8 @@ import Constants from 'expo-constants';
 import GlobalStyles from '../styles/styles';
 import { ScrollView } from 'react-native-gesture-handler';
 import { SafeAreaProvider, SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+
+import LottieView from 'lottie-react-native';
 
 function App(): React.ReactElement {
   const [items, setItems] = useState<Item[]>([
@@ -47,11 +50,43 @@ function App(): React.ReactElement {
         <View style={styles.container}>
           <StatusBar translucent={true} style="light" backgroundColor={GlobalStyles.primary} />
           <Header title="Shopping List" />
-          <ScrollView ref={scrollRef} style={{ flex: 1, marginTop: 12 }}>
-            {items.map((item) => (
-              <ListItem key={item.id} simultaneousHandlers={scrollRef} item={item} deleteItem={deleteItem} />
-            ))}
-          </ScrollView>
+          {items.length > 0 ? (
+            <ScrollView ref={scrollRef} style={{ flex: 1, marginTop: 12 }}>
+              {items.map((item) => (
+                <ListItem key={item.id} simultaneousHandlers={scrollRef} item={item} deleteItem={deleteItem} />
+              ))}
+            </ScrollView>
+          ) : (
+            <View
+              style={{
+                flex: 1,
+                alignItems: 'flex-start',
+                justifyContent: 'flex-start',
+                opacity: 0.75,
+              }}>
+              <Text
+                style={{
+                  justifyContent: 'center',
+                  alignSelf: 'center',
+                  marginTop: 60,
+                  fontSize: 22,
+                  fontWeight: '600',
+                  opacity: 0.8,
+                  letterSpacing: 2,
+                  alignContent: 'center',
+                  alignItems: 'center',
+                }}>
+                Nothing here, add new items
+              </Text>
+              <LottieView
+                style={{ width: '98%', aspectRatio: 1, marginTop: 20 }}
+                source={require('../assets/lottie/31631-astronautcopy.json')}
+                autoPlay
+                loop
+                speed={0.7}
+              />
+            </View>
+          )}
           <Input addItem={addItem} />
         </View>
       </SafeAreaView>
