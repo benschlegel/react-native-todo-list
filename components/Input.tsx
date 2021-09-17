@@ -113,10 +113,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     paddingBottom: 2,
     borderBottomColor: GlobalStyles.complimentary,
-    color: GlobalStyles.complimentary,
+    color: '#FFF',
     borderBottomWidth: 2,
     borderRadius: 2,
-    opacity: 0.75,
+    opacity: 0.7,
   },
   inputContainer: {
     flex: 1,

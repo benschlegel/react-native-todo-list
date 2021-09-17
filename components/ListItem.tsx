@@ -4,6 +4,7 @@ import { Dimensions, LayoutAnimation, StyleSheet, Text } from 'react-native';
 import { PanGestureHandler, PanGestureHandlerGestureEvent, PanGestureHandlerProps } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
 import type { Item } from '../types';
+import GlobalStyles from '../styles/styles';
 import Animated, { useAnimatedGestureHandler, useAnimatedStyle, useSharedValue, withTiming, runOnJS } from 'react-native-reanimated';
 
 interface Props extends Pick<PanGestureHandlerProps, 'simultaneousHandlers'> {
@@ -67,11 +68,11 @@ export function ListItem({ item, deleteItem, simultaneousHandlers }: Props): Rea
   });
 
   const reanimatedIconContainerStyle = useAnimatedStyle(() => {
-    iconOpacity.value = withTiming(translateX.value < DeleteXThreshold ? 0.6 : 0);
+    iconOpacity.value = withTiming(translateX.value < DeleteXThreshold ? 0.75 : 0);
     return {
       opacity: iconOpacity.value,
       transform: [{ translateX: translateX.value + ScreenWidth }],
-      backgroundColor: '#FF6961',
+      backgroundColor: GlobalStyles.secondary,
       borderBottomEndRadius: 6,
       borderTopEndRadius: 6,
     };

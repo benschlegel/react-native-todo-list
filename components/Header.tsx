@@ -10,7 +10,7 @@ interface Props {
 export function Header({ title }: Props): React.ReactElement {
   return (
     <View style={styles.header}>
-      <Ionicons name="chevron-back-outline" size={30} color="#c2bad8" />
+      <Ionicons name="chevron-back-outline" size={30} color={GlobalStyles.complimentary} />
       <Text style={styles.text}>{title}</Text>
     </View>
   );

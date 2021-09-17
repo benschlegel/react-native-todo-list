@@ -47,7 +47,7 @@ function App(): React.ReactElement {
         <View style={styles.container}>
           <StatusBar translucent={true} style="light" backgroundColor={GlobalStyles.primary} />
           <Header title="Shopping List" />
-          <ScrollView ref={scrollRef} style={{ flex: 1, marginTop: 24 }}>
+          <ScrollView ref={scrollRef} style={{ flex: 1, marginTop: 12 }}>
             {items.map((item) => (
               <ListItem key={item.id} simultaneousHandlers={scrollRef} item={item} deleteItem={deleteItem} />
             ))}
