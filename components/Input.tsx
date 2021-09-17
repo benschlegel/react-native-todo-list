@@ -2,6 +2,7 @@
 import React, { useState, useRef, Component, useEffect } from 'react';
 import { StyleSheet, View, KeyboardAvoidingView, TextInput, Keyboard, Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import GlobalStyles from '../styles/styles';
 import Animated, {
   useAnimatedGestureHandler,
   useAnimatedStyle,
@@ -82,13 +83,13 @@ export function Input({ addItem }: Props): React.ReactElement {
   return (
     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.containerBottom}>
       <Animated.View style={[styles.icon, animationStyle]}>
-        <Ionicons name={'chevron-forward-outline'} size={28} color={'#c2bad8'} onPress={toggleInputSize} />
+        <Ionicons name={'chevron-forward-outline'} size={28} color={GlobalStyles.complimentary} onPress={toggleInputSize} />
       </Animated.View>
       <View style={styles.inputContainer}>
         <TextInput
           placeholder="Add Item..."
-          selectionColor={'#c2bad8'}
-          placeholderTextColor="#c2bad8"
+          selectionColor={GlobalStyles.complimentary}
+          placeholderTextColor="#FFFFFF"
           style={styles.input}
           onChangeText={onTextChange}
           ref={inputField}
@@ -111,10 +112,11 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     fontSize: 16,
     paddingBottom: 2,
-    borderBottomColor: '#c2bad8',
-    color: '#c2bad8',
+    borderBottomColor: GlobalStyles.complimentary,
+    color: GlobalStyles.complimentary,
     borderBottomWidth: 2,
     borderRadius: 2,
+    opacity: 0.75,
   },
   inputContainer: {
     flex: 1,
@@ -131,7 +133,7 @@ const styles = StyleSheet.create({
     borderTopEndRadius: 12,
     overflow: 'hidden',
     flex: 0.1,
-    backgroundColor: '#322775',
+    backgroundColor: GlobalStyles.secondary,
     justifyContent: 'flex-start',
     alignContent: 'space-between',
     flexDirection: 'row',

@@ -27,6 +27,7 @@
     "src",
     "components",
     "types",
+    "styles",
     ".eslintrc.js",
     "babel.config.js"
   ],

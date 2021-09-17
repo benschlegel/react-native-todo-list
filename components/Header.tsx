@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import GlobalStyles from '../styles/styles';
 
 interface Props {
   title: string;
@@ -23,7 +24,7 @@ const styles = StyleSheet.create({
   header: {
     height: 60,
     padding: 15,
-    backgroundColor: 'darkslateblue',
+    backgroundColor: GlobalStyles.primary,
     flexDirection: 'row',
   },
   text: {

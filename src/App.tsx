@@ -8,7 +8,7 @@ import type { Item } from '../types';
 import uuid from 'uuidv4';
 import { StatusBar } from 'expo-status-bar';
 import Constants from 'expo-constants';
-//import { SafeAreaView } from 'react-navigation';
+import GlobalStyles from '../styles/styles';
 import { ScrollView } from 'react-native-gesture-handler';
 import { SafeAreaProvider, SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -45,7 +45,7 @@ function App(): React.ReactElement {
     <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1 }} edges={['left', 'right']}>
         <View style={styles.container}>
-          <StatusBar backgroundColor="darkslateblue" translucent={true} style="light" />
+          <StatusBar translucent={true} style="light" backgroundColor={GlobalStyles.primary} />
           <Header title="Shopping List" />
           <ScrollView ref={scrollRef} style={{ flex: 1, marginTop: 24 }}>
             {items.map((item) => (
