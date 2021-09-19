@@ -80,10 +80,10 @@ function App(): React.ReactElement {
               </Text>
               <LottieView
                 style={{ width: '98%', aspectRatio: 1, marginTop: 20 }}
-                source={require('../assets/lottie/31631-astronautcopy.json')}
+                source={require('../assets/lottie/astronaut.json')}
                 autoPlay
                 loop
-                speed={0.7}
+                speed={0.4}
               />
             </View>
           )}
