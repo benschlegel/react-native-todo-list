@@ -11,7 +11,7 @@ import { StatusBar } from 'expo-status-bar';
 import Constants from 'expo-constants';
 import GlobalStyles from '../styles/styles';
 import { ScrollView } from 'react-native-gesture-handler';
-import { SafeAreaProvider, SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
 import LottieView from 'lottie-react-native';
 
@@ -27,7 +27,7 @@ function App(): React.ReactElement {
 
   //Use useCallback()? idk
   const deleteItem = (item: Item): void => {
-    setItems((prevItems): Item[] => {
+    setItems((prevItems: Item[]): Item[] => {
       return prevItems.filter((newItem: Item) => newItem.id !== item.id);
     });
   };
@@ -52,7 +52,7 @@ function App(): React.ReactElement {
           <Header title="Shopping List" />
           {items.length > 0 ? (
             <ScrollView ref={scrollRef} style={{ flex: 1, marginTop: 12 }}>
-              {items.map((item) => (
+              {items.map((item: Item) => (
                 <ListItem key={item.id} simultaneousHandlers={scrollRef} item={item} deleteItem={deleteItem} />
               ))}
             </ScrollView>

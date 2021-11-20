@@ -7,7 +7,9 @@
     "importsNotUsedAsValues": "error",
     "forceConsistentCasingInFileNames": true,
     "jsx": "react-native",
-    "lib": ["esnext"],
+    "lib": [
+      "esnext"
+    ],
     "module": "esnext",
     "moduleResolution": "node",
     "noFallthroughCasesInSwitch": true,
@@ -22,16 +24,18 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
-    "target": "esnext",
+    "target": "esnext"
   },
   "include": [
     "src",
     "index.js",
     ".eslintrc.js",
     "babel.config.js",
-    "react-native.config.js"
+    "react-native.config.js",
+    "components"
   ],
   "exclude": [
-    "node_modules",
-  ]
+    "node_modules"
+  ],
+  "extends": "expo/tsconfig.base"
 }
