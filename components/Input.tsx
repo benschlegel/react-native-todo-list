@@ -83,13 +83,19 @@ export function Input({ addItem }: Props): React.ReactElement {
   return (
     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={styles.containerBottom}>
       <Animated.View style={[styles.icon, animationStyle]}>
-        <Ionicons name={'chevron-forward-outline'} size={28} color={GlobalStyles.complimentary} onPress={toggleInputSize} />
+        <Ionicons
+          name={'chevron-forward-outline'}
+          size={28}
+          color={GlobalStyles.complimentary}
+          onPress={toggleInputSize}
+          style={{ transform: [{ scale: 1.35 }] }}
+        />
       </Animated.View>
       <View style={styles.inputContainer}>
         <TextInput
           placeholder="Add Item..."
           selectionColor={GlobalStyles.complimentary}
-          placeholderTextColor="#FFFFFF"
+          placeholderTextColor="#FFF"
           style={styles.input}
           onChangeText={onTextChange}
           ref={inputField}
@@ -114,9 +120,9 @@ const styles = StyleSheet.create({
     paddingBottom: 2,
     borderBottomColor: GlobalStyles.complimentary,
     color: '#FFF',
-    borderBottomWidth: 2,
+    borderBottomWidth: 3,
     borderRadius: 2,
-    opacity: 0.7,
+    opacity: 0.75,
   },
   inputContainer: {
     flex: 1,

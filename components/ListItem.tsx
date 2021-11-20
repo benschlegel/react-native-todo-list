@@ -68,13 +68,13 @@ export function ListItem({ item, deleteItem, simultaneousHandlers }: Props): Rea
   });
 
   const reanimatedIconContainerStyle = useAnimatedStyle(() => {
-    iconOpacity.value = withTiming(translateX.value < DeleteXThreshold ? 0.75 : 0);
+    iconOpacity.value = withTiming(translateX.value < DeleteXThreshold ? 0.85 : 0);
     return {
       opacity: iconOpacity.value,
       transform: [{ translateX: translateX.value + ScreenWidth }],
       backgroundColor: GlobalStyles.secondary,
-      borderBottomEndRadius: 6,
-      borderTopEndRadius: 6,
+      borderBottomEndRadius: 12,
+      borderTopEndRadius: 12,
     };
   });
 
@@ -90,7 +90,7 @@ export function ListItem({ item, deleteItem, simultaneousHandlers }: Props): Rea
   return (
     <Animated.View style={[styles.taskContainer, reanimatedTaskContainerStyle]}>
       <Animated.View style={[styles.iconContainer, reanimatedIconContainerStyle]}>
-        <Ionicons name={'trash-outline'} size={ItemHeight * 0.4} color={'red'} />
+        <Ionicons name={'trash-outline'} size={ItemHeight * 0.4} color={GlobalStyles.complimentary} />
       </Animated.View>
 
       <PanGestureHandler simultaneousHandlers={simultaneousHandlers} onGestureEvent={panGesture}>

@@ -1,7 +1,19 @@
 <div align="center">
   <h1><img align="center" src="./images/icon.png" width="50"/> SimpleList</h1>
   <h2>A clean and simple Todo/Shopping list powered by <a href='https://github.com/software-mansion/react-native-reanimated'>Reanimated</a> 🚀
-  <br/><br/><img src="./images/preview.png" width="280" alt="Preview"/></h2>
+  <br/><br/><table>
+  <tr>
+    <td width="33%">
+      <img src="./images/sample0.png" />
+    </td>
+    <td width="33%">
+      <img src="./images/sample1.png" />
+    </td>
+    <td width="33%">
+      <img src="./images/sample2.png" />
+    </td>
+  </tr>
+</table></h2>
 </div>
 
 ## 📥 Local installation
