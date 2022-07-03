@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
-import { Dimensions, LayoutAnimation, StyleSheet, Text } from 'react-native';
-import { PanGestureHandler, PanGestureHandlerGestureEvent, PanGestureHandlerProps } from 'react-native-gesture-handler';
+import { Dimensions, StyleSheet, Text } from 'react-native';
+import { Gesture, GestureDetector, PanGestureHandlerProps } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
 import type { Item } from '../types';
 import GlobalStyles from '../styles/styles';
-import Animated, { useAnimatedGestureHandler, useAnimatedStyle, useSharedValue, withTiming, runOnJS } from 'react-native-reanimated';
+import Animated, { useAnimatedStyle, useSharedValue, withTiming, runOnJS } from 'react-native-reanimated';
 
 interface Props extends Pick<PanGestureHandlerProps, 'simultaneousHandlers'> {
   item: {
@@ -21,20 +21,20 @@ const { width: ScreenWidth } = Dimensions.get('window'); //gets window dimension
 
 const DeleteXThreshold = -ScreenWidth * 0.3; //defines how much you have to swipe to delete task
 
-export function ListItem({ item, deleteItem, simultaneousHandlers }: Props): React.ReactElement {
+export function ListItem({ item, deleteItem }: Props): React.ReactElement {
   const translateX = useSharedValue(0); //shared between reanimated and js
   const itemHeight = useSharedValue(ItemHeight); //Changed when task is deleted
   const marginVertical = useSharedValue(6); //Changed when task is deleted
   const taskOpacity = useSharedValue(1); //1 if visible, 0 if not, changes opacity to 0 on delete
   const iconOpacity = useSharedValue(0); //1 if visible, 0 if not, changes opacity to 0 on delete
 
-  //Defines gesture for task
-  const panGesture = useAnimatedGestureHandler<PanGestureHandlerGestureEvent>({
-    onActive: (event) => {
+  //Defines gesture for task (updated for GestureHandler 2)
+  const panGesture = Gesture.Pan()
+  .onUpdate((event) => {
       //Update value while active to use on End
       translateX.value = event.translationX;
-    },
-    onEnd: () => {
+    })
+    .onEnd(() => {
       //Fires when task is released, either reset task or delete it according to threshold
       const willBeDismissed: boolean = translateX.value < DeleteXThreshold;
       if (willBeDismissed) {
@@ -53,8 +53,8 @@ export function ListItem({ item, deleteItem, simultaneousHandlers }: Props): Rea
       } else {
         translateX.value = withTiming(0);
       }
-    },
-  });
+    })
+
 
   //Animates the x value of task
   const reanimatedStyle = useAnimatedStyle(() => {
@@ -87,19 +87,21 @@ export function ListItem({ item, deleteItem, simultaneousHandlers }: Props): Rea
     };
   });
 
+  // TODO: fix simultaneousHandlers for scrollview
+
   return (
     <Animated.View style={[styles.taskContainer, reanimatedTaskContainerStyle]}>
       <Animated.View style={[styles.iconContainer, reanimatedIconContainerStyle]}>
         <Ionicons name={'trash-outline'} size={ItemHeight * 0.4} color={GlobalStyles.complimentary} />
       </Animated.View>
 
-      <PanGestureHandler simultaneousHandlers={simultaneousHandlers} onGestureEvent={panGesture}>
+      <GestureDetector gesture={panGesture}>
         <Animated.View style={[styles.task, reanimatedStyle]}>
           <Text adjustsFontSizeToFit style={styles.taskTitle}>
             {item.text}
           </Text>
-        </Animated.View>
-      </PanGestureHandler>
+      </Animated.View>
+      </GestureDetector>
     </Animated.View>
   );
 }

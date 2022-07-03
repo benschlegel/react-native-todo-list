@@ -10,8 +10,7 @@ import uuid from 'uuidv4';
 import { StatusBar } from 'expo-status-bar';
 import Constants from 'expo-constants';
 import GlobalStyles from '../styles/styles';
-import { ScrollView } from 'react-native-gesture-handler';
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler';
 
 import LottieView from 'lottie-react-native';
 
@@ -20,7 +19,7 @@ function App(): React.ReactElement {
     { id: uuid(), text: 'Milk' },
     { id: uuid(), text: 'Apl' },
     { id: uuid(), text: 'Eg' },
-    { id: uuid(), text: 'Toe' },
+    { id: uuid(), text: 'Bread' },
   ]);
 
   const scrollRef = useRef(null);
@@ -43,19 +42,28 @@ function App(): React.ReactElement {
     }
   };
 
+  // TODO: check if safeareaview needed
+  // TODO: use new expo status bar translucent
+
   //SafeAreaView Spaces out content below status bar
   return (
-    <SafeAreaProvider>
-      <SafeAreaView style={{ flex: 1 }} edges={['left', 'right']}>
-        <View style={styles.container}>
+    // <SafeAreaProvider>
+    //   <SafeAreaView style={{ flex: 1 }} edges={['left', 'right']}>
+
+        <GestureHandlerRootView style={styles.container}>
           <StatusBar translucent={true} style="light" backgroundColor={GlobalStyles.primary} />
           <Header title="Shopping List" />
           {items.length > 0 ? (
+            <>
             <ScrollView ref={scrollRef} style={{ flex: 1, marginTop: 12 }}>
+              {/* {items.map((item: Item) => ( */}
               {items.map((item: Item) => (
-                <ListItem key={item.id} simultaneousHandlers={scrollRef} item={item} deleteItem={deleteItem} />
+                // <ListItem key={item.id} simultaneousHandlers={scrollRef} item={item} deleteItem={deleteItem} />
+                <ListItem key={item.id} item={item} deleteItem={deleteItem} />
               ))}
             </ScrollView>
+
+            </>
           ) : (
             <View
               style={{
@@ -88,9 +96,9 @@ function App(): React.ReactElement {
             </View>
           )}
           <Input addItem={addItem} />
-        </View>
-      </SafeAreaView>
-    </SafeAreaProvider>
+        </GestureHandlerRootView>
+    //   </SafeAreaView>
+    // </SafeAreaProvider>
   );
 }
 

@@ -11,3 +11,15 @@ web-build/
 
 # macOS
 .DS_Store
+
+
+**/fastlane/report.xml
+**/fastlane/Preview.html
+**/fastlane/screenshots
+**/fastlane/test_output
+*.hprof
+ios/.xcode.env.local
+
+# Ruby / CocoaPods
+/ios/Pods/
+/vendor/bundle/
