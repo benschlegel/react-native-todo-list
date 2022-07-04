@@ -21,7 +21,7 @@ const { width: ScreenWidth } = Dimensions.get('window'); //gets window dimension
 
 const DeleteXThreshold = -ScreenWidth * 0.3; //defines how much you have to swipe to delete task
 
-export function ListItem({ item, deleteItem }: Props): React.ReactElement {
+export function ListItem({ item, deleteItem, simultaneousHandlers }: Props): React.ReactElement {
   const translateX = useSharedValue(0); //shared between reanimated and js
   const itemHeight = useSharedValue(ItemHeight); //Changed when task is deleted
   const marginVertical = useSharedValue(6); //Changed when task is deleted
@@ -32,6 +32,7 @@ export function ListItem({ item, deleteItem }: Props): React.ReactElement {
   const panGesture = Gesture.Pan()
   .onUpdate((event) => {
       //Update value while active to use on End
+      console.log(translateX.value);
       translateX.value = event.translationX;
     })
     .onEnd(() => {
@@ -54,6 +55,7 @@ export function ListItem({ item, deleteItem }: Props): React.ReactElement {
         translateX.value = withTiming(0);
       }
     })
+    .simultaneousWithExternalGesture(simultaneousHandlers)
 
 
   //Animates the x value of task
@@ -88,6 +90,7 @@ export function ListItem({ item, deleteItem }: Props): React.ReactElement {
   });
 
   // TODO: fix simultaneousHandlers for scrollview
+  const combinedGesture = Gesture.Simultaneous(panGesture)
 
   return (
     <Animated.View style={[styles.taskContainer, reanimatedTaskContainerStyle]}>
@@ -95,7 +98,7 @@ export function ListItem({ item, deleteItem }: Props): React.ReactElement {
         <Ionicons name={'trash-outline'} size={ItemHeight * 0.4} color={GlobalStyles.complimentary} />
       </Animated.View>
 
-      <GestureDetector gesture={panGesture}>
+      <GestureDetector gesture={combinedGesture}>
         <Animated.View style={[styles.task, reanimatedStyle]}>
           <Text adjustsFontSizeToFit style={styles.taskTitle}>
             {item.text}

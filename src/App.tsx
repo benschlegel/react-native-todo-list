@@ -58,8 +58,8 @@ function App(): React.ReactElement {
             <ScrollView ref={scrollRef} style={{ flex: 1, marginTop: 12 }}>
               {/* {items.map((item: Item) => ( */}
               {items.map((item: Item) => (
-                // <ListItem key={item.id} simultaneousHandlers={scrollRef} item={item} deleteItem={deleteItem} />
-                <ListItem key={item.id} item={item} deleteItem={deleteItem} />
+                <ListItem key={item.id} simultaneousHandlers={scrollRef} item={item} deleteItem={deleteItem} />
+                // <ListItem key={item.id} item={item} deleteItem={deleteItem} />
               ))}
             </ScrollView>
 
