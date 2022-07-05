@@ -7,10 +7,12 @@ interface Props {
   title: string;
 }
 
+const ICON_SIZE = 30;
+
 export function Header({ title }: Props): React.ReactElement {
   return (
     <View style={styles.header}>
-      <Ionicons name="chevron-back-outline" size={30} color={GlobalStyles.complimentary} />
+      <Ionicons name="chevron-back-outline" size={ICON_SIZE} color={GlobalStyles.complimentary} />
       <Text style={styles.text}>{title}</Text>
     </View>
   );
@@ -33,6 +35,7 @@ const styles = StyleSheet.create({
     fontSize: 23,
     fontWeight: 'bold',
     textAlign: 'center',
-    justifyContent: 'center',
+    marginLeft: -ICON_SIZE,
+    // justifyContent: 'center',
   },
 });

@@ -54,23 +54,19 @@ function App(): React.ReactElement {
     }
   };
 
-  // TODO: check if safeareaview needed
 
-  //SafeAreaView Spaces out content below status bar
   return (
-    // <SafeAreaProvider>
-    //   <SafeAreaView style={{ flex: 1 }} edges={['left', 'right']}>
 
         <GestureHandlerRootView style={styles.container}>
           <StatusBar translucent={true} style="light" backgroundColor={GlobalStyles.primary} />
+          {/* sets actual background color */}
+          <View style={{backgroundColor:'#f8f8f8', flex: 1}} >
           <Header title="Shopping List" />
           {items.length > 0 ? (
             <>
             <ScrollView ref={scrollRef} style={{ flex: 1, marginTop: 12 }}>
-              {/* {items.map((item: Item) => ( */}
               {items.map((item: Item) => (
-                <ListItem key={item.id} simultaneousHandlers={scrollRef} item={item} deleteItem={deleteItem} />
-                // <ListItem key={item.id} item={item} deleteItem={deleteItem} />
+                <ListItem key={item.id} simultaneousHandlers={scrollRef} item={item} deleteItem={deleteItem}/>
               ))}
             </ScrollView>
 
@@ -107,18 +103,18 @@ function App(): React.ReactElement {
             </View>
           )}
           <Input addItem={addItem} />
+          </View>
         </GestureHandlerRootView>
-    //   </SafeAreaView>
-    // </SafeAreaProvider>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8f8f8',
-    paddingTop: Platform.OS === 'android' ? Constants.statusBarHeight : 0,
-  },
+    //Needed for status bar color on ios, actual bar color set on view above
+    backgroundColor: GlobalStyles.primary,
+    paddingTop: Platform.OS === 'android' ? Constants.statusBarHeight : Constants.statusBarHeight - 15,
+  }
 });
 
 registerRootComponent(App);

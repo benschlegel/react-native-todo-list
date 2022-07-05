@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Dimensions, StyleSheet, Text } from 'react-native';
 import { Gesture, GestureDetector, PanGestureHandlerProps } from 'react-native-gesture-handler';
 import { Ionicons } from '@expo/vector-icons';
 import type { Item } from '../types';
 import GlobalStyles from '../styles/styles';
-import Animated, { useAnimatedStyle, useSharedValue, withTiming, runOnJS } from 'react-native-reanimated';
+import Animated, { useAnimatedStyle, useSharedValue, withTiming, runOnJS, FadeIn, ZoomIn, ZoomInDown, ZoomInUp, ZoomInEasyUp, SlideInRight, BounceInRight, Layout, SlideOutLeft } from 'react-native-reanimated';
 
 interface Props extends Pick<PanGestureHandlerProps, 'simultaneousHandlers'> {
   item: {
@@ -28,6 +28,11 @@ export function ListItem({ item, deleteItem, simultaneousHandlers }: Props): Rea
   const taskOpacity = useSharedValue(1); //1 if visible, 0 if not, changes opacity to 0 on delete
   const iconOpacity = useSharedValue(0); //1 if visible, 0 if not, changes opacity to 0 on delete
 
+  const deleteCallback = useCallback(() => {
+    console.log("deleting...")
+    runOnJS(deleteItem)(item); //run on JS instead of UI thread
+  }, [])
+
   //Defines gesture for task (updated for GestureHandler 2)
   const panGesture = Gesture.Pan()
   .onUpdate((event) => {
@@ -39,14 +44,12 @@ export function ListItem({ item, deleteItem, simultaneousHandlers }: Props): Rea
       const willBeDismissed: boolean = translateX.value < DeleteXThreshold;
       if (willBeDismissed) {
         translateX.value = withTiming(-ScreenWidth);
-        //TODO: use LayoutAnimation
-        itemHeight.value = withTiming(0);
-        marginVertical.value = withTiming(0);
 
         //undefined: default user config, callback: when animation is finished
         taskOpacity.value = withTiming(0, undefined, (isFinished) => {
           iconOpacity.value = withTiming(0, { duration: 50 });
           if (isFinished) {
+            // TODO: animate shadow disapearing
             runOnJS(deleteItem)(item); //run on JS instead of UI thread
           }
         });
@@ -55,6 +58,7 @@ export function ListItem({ item, deleteItem, simultaneousHandlers }: Props): Rea
       }
     })
     .simultaneousWithExternalGesture(simultaneousHandlers)
+    //Handles scrollview
 
 
   //Animates the x value of task
@@ -89,10 +93,11 @@ export function ListItem({ item, deleteItem, simultaneousHandlers }: Props): Rea
   });
 
   // TODO: fix simultaneousHandlers for scrollview
+  // TODO: apply layoutanimation in app.tsx loop
   const combinedGesture = Gesture.Simultaneous(panGesture)
 
   return (
-    <Animated.View style={[styles.taskContainer, reanimatedTaskContainerStyle]}>
+    <Animated.View style={[styles.taskContainer, reanimatedTaskContainerStyle]} entering={SlideInRight.delay(100).duration(250).springify().damping(1000).mass(2).stiffness(1000)} layout={Layout} exiting={SlideOutLeft.duration(250).springify().damping(1000).mass(2).stiffness(1000)}>
       <Animated.View style={[styles.iconContainer, reanimatedIconContainerStyle]}>
         <Ionicons name={'trash-outline'} size={ItemHeight * 0.4} color={GlobalStyles.complimentary} />
       </Animated.View>
