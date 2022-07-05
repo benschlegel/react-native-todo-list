@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { registerRootComponent } from 'expo';
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { StyleSheet, View, Alert, Platform, Text } from 'react-native';
 import { Header } from '../components/Header';
 import { ListItem } from '../components/ListItem';
@@ -11,10 +11,21 @@ import { StatusBar } from 'expo-status-bar';
 import Constants from 'expo-constants';
 import GlobalStyles from '../styles/styles';
 import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler';
+import * as NavigationBar from 'expo-navigation-bar';
 
 import LottieView from 'lottie-react-native';
 
+const setNavbar = async () => {
+  //TODO: use global theme or fix transparency
+  await NavigationBar.setBackgroundColorAsync(GlobalStyles.secondary)
+}
+
 function App(): React.ReactElement {
+
+  useEffect(() => {
+    setNavbar();
+  }, [])
+
   const [items, setItems] = useState<Item[]>([
     { id: uuid(), text: 'Milk' },
     { id: uuid(), text: 'Apl' },

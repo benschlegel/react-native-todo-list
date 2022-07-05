@@ -32,7 +32,6 @@ export function ListItem({ item, deleteItem, simultaneousHandlers }: Props): Rea
   const panGesture = Gesture.Pan()
   .onUpdate((event) => {
       //Update value while active to use on End
-      console.log(translateX.value);
       translateX.value = event.translationX;
     })
     .onEnd(() => {
