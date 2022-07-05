@@ -32,7 +32,7 @@
     ".eslintrc.js",
     "babel.config.js",
     "react-native.config.js",
-    "components"
+    "src/components"
   ],
   "exclude": [
     "node_modules"

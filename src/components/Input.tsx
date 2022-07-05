@@ -1,18 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useState, useRef, Component, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { StyleSheet, View, KeyboardAvoidingView, TextInput, Keyboard, Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import GlobalStyles from '../styles/styles';
 import Animated, {
-  useAnimatedGestureHandler,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
-  runOnJS,
   useDerivedValue,
   interpolate,
 } from 'react-native-reanimated';
-import SystemNavigationBar from 'react-native-system-navigation-bar';
 
 //Props being passed to component
 interface Props {

@@ -2,14 +2,14 @@
 import { registerRootComponent } from 'expo';
 import React, { useState, useRef, useEffect } from 'react';
 import { StyleSheet, View, Alert, Platform, Text } from 'react-native';
-import { Header } from '../components/Header';
-import { ListItem } from '../components/ListItem';
-import { Input } from '../components/Input';
+import { Header } from './components/Header';
+import { ListItem } from './components/ListItem';
+import { Input } from './components/Input';
 import type { Item } from '../types';
 import uuid from 'uuidv4';
 import { StatusBar } from 'expo-status-bar';
 import Constants from 'expo-constants';
-import GlobalStyles from '../styles/styles';
+import GlobalStyles from './styles/styles';
 import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler';
 import * as NavigationBar from 'expo-navigation-bar';
 
@@ -17,6 +17,7 @@ import LottieView from 'lottie-react-native';
 
 const setNavbar = async () => {
   //TODO: use global theme or fix transparency
+  // https://docs.expo.dev/versions/v44.0.0/sdk/navigation-bar/
   await NavigationBar.setBackgroundColorAsync(GlobalStyles.secondary)
 }
 
@@ -54,7 +55,6 @@ function App(): React.ReactElement {
   };
 
   // TODO: check if safeareaview needed
-  // TODO: use new expo status bar translucent
 
   //SafeAreaView Spaces out content below status bar
   return (
