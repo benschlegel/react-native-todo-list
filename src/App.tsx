@@ -9,6 +9,7 @@ import { Home } from './routes/Home/Home';
 import GlobalStyles from './styles/styles';
 import { Ionicons } from '@expo/vector-icons';
 import type { HeaderBackButtonProps } from '@react-navigation/native-stack/lib/typescript/src/types';
+import { TransitionPresets } from '@react-navigation/stack';
 
 
 const Stack = createNativeStackNavigator<Routes>();
@@ -27,7 +28,11 @@ function App(): React.ReactElement {
           fontWeight: 'bold',
           color: '#FFF',
           fontSize: 23,
-        }
+        },
+        animation: "slide_from_right",
+        // TODO: tweak duration (good for now)
+        // TODO: fix header title offcenter vertically
+        animationDuration: 135
       }}>
 
 
