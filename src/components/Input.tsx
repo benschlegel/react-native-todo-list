@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     flex: 1,
-    marginBottom: 8,
+    marginBottom: 0,
     marginRight: 25,
     marginTop: 15,
     marginLeft: 6,

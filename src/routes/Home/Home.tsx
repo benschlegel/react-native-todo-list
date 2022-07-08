@@ -3,10 +3,12 @@ import { StyleSheet, View, Text, Button } from 'react-native';
 import type { Routes } from '../../Routes';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import * as NavigationBar from 'expo-navigation-bar';
+import { StatusBar } from 'expo-status-bar';
+import GlobalStyles from '../../styles/styles';
 // import GlobalStyles from '../../styles/styles';
 
 const setNavbar = async () => {
-  await NavigationBar.setBackgroundColorAsync("#ffffff00");
+  await NavigationBar.setBackgroundColorAsync("green");
 }
 
 // TODO: potentially look into deep linking (for shared lists)
@@ -17,6 +19,8 @@ export function Home({ navigation }: NativeStackScreenProps<Routes, 'Home'>): Re
   }, [])
   return (
     <View style={styles.container}>
+          <StatusBar translucent={true} style="light" backgroundColor={GlobalStyles.primary} />
+
       <Text>Home</Text>
       <Button
         title="Go to Details"

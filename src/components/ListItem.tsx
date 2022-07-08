@@ -127,10 +127,10 @@ const styles = StyleSheet.create({
     elevation: 2,
     borderRadius: 10,
     justifyContent: 'center',
-    shadowOpacity: 0.08,
+    shadowOpacity: 0.05,
     shadowOffset: {
       width: 0,
-      height: 20,
+      height: 12,
     },
     shadowRadius: 10,
   },

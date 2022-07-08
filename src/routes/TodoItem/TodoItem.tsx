@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useLayoutEffect } from 'react';
 import { StyleSheet, View, Alert, Platform, Text } from 'react-native';
 import { Header } from '../../components/Header';
 import { ListItem } from '../../components/ListItem';
@@ -10,6 +10,8 @@ import Constants from 'expo-constants';
 import GlobalStyles from '../../styles/styles';
 import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler';
 import * as NavigationBar from 'expo-navigation-bar';
+import { Ionicons } from '@expo/vector-icons';
+
 
 import LottieView from 'lottie-react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -24,8 +26,14 @@ const setNavbar = async () => {
 
 export function TodoItem({ route, navigation }: NativeStackScreenProps<Routes, 'Todo'>): React.ReactElement {
   const {id} = route.params;
-  useEffect(() => {
+  useLayoutEffect(() => {
     setNavbar();
+    navigation.setOptions({
+      title: "Shopping List",
+      headerLeft: () => (
+        <Ionicons name="chevron-back-outline" size={32} color={GlobalStyles.complimentary} onPress={() => navigation.goBack()}/>
+      ),
+    })
   }, [])
 
   const [items, setItems] = useState<Item[]>([
@@ -62,7 +70,8 @@ export function TodoItem({ route, navigation }: NativeStackScreenProps<Routes, '
           <StatusBar translucent={true} style="light" backgroundColor={GlobalStyles.primary} />
           {/* sets actual background color */}
           <View style={{backgroundColor:'#f8f8f8', flex: 1}} >
-          <Header title="Shopping List" />
+            {/* used to be Header component */}
+          <View style={{height: Platform.OS === 'android' ? Constants.statusBarHeight + 50 : 0}} />
           {items.length > 0 ? (
             <>
             <ScrollView ref={scrollRef} style={{ flex: 1, marginTop: 12 }}>
@@ -114,6 +123,6 @@ const styles = StyleSheet.create({
     flex: 1,
     //Needed for status bar color on ios, actual bar color set on view above
     backgroundColor: GlobalStyles.primary,
-    paddingTop: Platform.OS === 'android' ? Constants.statusBarHeight : Constants.statusBarHeight - 15,
+    // paddingTop: Platform.OS === 'android' ? Constants.statusBarHeight : Constants.statusBarHeight - 15,
   }
 });
