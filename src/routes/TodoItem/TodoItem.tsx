@@ -12,6 +12,8 @@ import { GestureHandlerRootView, ScrollView } from 'react-native-gesture-handler
 import * as NavigationBar from 'expo-navigation-bar';
 
 import LottieView from 'lottie-react-native';
+import type { NativeStackScreenProps } from '@react-navigation/native-stack';
+import type { Routes } from '../../Routes';
 
 const setNavbar = async () => {
   //TODO: use global theme or fix transparency
@@ -20,8 +22,8 @@ const setNavbar = async () => {
   await NavigationBar.setBackgroundColorAsync(GlobalStyles.secondary)
 }
 
-export function TodoItem(): React.ReactElement {
-
+export function TodoItem({ route, navigation }: NativeStackScreenProps<Routes, 'Todo'>): React.ReactElement {
+  const {id} = route.params;
   useEffect(() => {
     setNavbar();
   }, [])

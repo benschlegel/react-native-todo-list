@@ -8,5 +8,5 @@ export interface StackNavigationProps<ParamList extends ParamListBase, RouteName
 
 export type Routes = {
   Home: undefined;
-  Todo: undefined;
+  Todo: { id: number };
 };
