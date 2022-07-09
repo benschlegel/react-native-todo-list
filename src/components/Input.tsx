@@ -85,7 +85,7 @@ export function Input({ addItem }: Props): React.ReactElement {
           size={28}
           color={GlobalStyles.complimentary}
           onPress={toggleInputSize}
-          style={{ transform: [{ scale: 1.35 }] }}
+          style={styles.iconTransform}
         />
       </Animated.View>
       <View style={styles.inputContainer}>
@@ -141,4 +141,5 @@ const styles = StyleSheet.create({
     alignContent: 'space-between',
     flexDirection: 'row',
   },
+  iconTransform: { transform: [{ scale: 1.35 }] }
 });

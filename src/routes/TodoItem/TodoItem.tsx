@@ -25,13 +25,13 @@ const setNavbar = async () => {
 }
 
 export function TodoItem({ route, navigation }: NativeStackScreenProps<Routes, 'Todo'>): React.ReactElement {
-  const {id} = route.params;
+  const { id } = route.params;
   useLayoutEffect(() => {
     setNavbar();
     navigation.setOptions({
       title: "Shopping List",
       headerLeft: () => (
-        <Ionicons name="chevron-back-outline" size={32} color={GlobalStyles.complimentary} onPress={() => navigation.goBack()}/>
+        <Ionicons name="chevron-back-outline" size={32} color={GlobalStyles.complimentary} onPress={() => navigation.goBack()} />
       ),
     })
   }, [])
@@ -66,55 +66,40 @@ export function TodoItem({ route, navigation }: NativeStackScreenProps<Routes, '
 
   return (
 
-<GestureHandlerRootView  style={styles.container}>
-          <StatusBar translucent={true} style="light" backgroundColor={GlobalStyles.primary} />
-          {/* sets actual background color */}
-          <View style={{backgroundColor: GlobalStyles.white2, flex: 1}} >
-            {/* used to be Header component */}
-          <View style={{height: Platform.OS === 'android' ? Constants.statusBarHeight + 50 : 0}} />
-          {items.length > 0 ? (
-            <>
-            <ScrollView ref={scrollRef} style={{ flex: 1, marginTop: 12 }}>
+    <GestureHandlerRootView style={styles.container}>
+      <StatusBar translucent={true} style="light" backgroundColor={GlobalStyles.primary} />
+      {/* sets actual background color */}
+      <View style={styles.background} >
+        {/* used to be Header component */}
+        <View style={styles.adjustHeader} />
+        {items.length > 0 ? (
+          <>
+            <ScrollView ref={scrollRef} style={styles.scrollView}>
               {items.map((item: Item) => (
-                <ListItem key={item.id} simultaneousHandlers={scrollRef} item={item} deleteItem={deleteItem}/>
+                <ListItem key={item.id} simultaneousHandlers={scrollRef} item={item} deleteItem={deleteItem} />
               ))}
             </ScrollView>
 
-            </>
-          ) : (
-            <View
-              style={{
-                flex: 1,
-                alignItems: 'flex-start',
-                justifyContent: 'flex-start',
-                opacity: 0.75,
-              }}>
-              <Text
-                style={{
-                  justifyContent: 'center',
-                  alignSelf: 'center',
-                  marginTop: 60,
-                  fontSize: 22,
-                  fontWeight: '600',
-                  opacity: 0.8,
-                  letterSpacing: 2,
-                  alignContent: 'center',
-                  alignItems: 'center',
-                }}>
-                Nothing here, add new items
-              </Text>
-              <LottieView
-                style={{ width: '98%', aspectRatio: 1, marginTop: 20 }}
-                source={require('../../../assets/lottie/astronaut.json')}
-                autoPlay
-                loop
-                speed={0.4}
-              />
-            </View>
-          )}
-          <Input addItem={addItem} />
+          </>
+        ) : (
+          <View
+            style={styles.itemWrapper}>
+            <Text
+              style={styles.text}>
+              Nothing here, add new items
+            </Text>
+            <LottieView
+              style={styles.lottie}
+              source={require('../../../assets/lottie/astronaut.json')}
+              autoPlay
+              loop
+              speed={0.4}
+            />
           </View>
-          </GestureHandlerRootView>
+        )}
+        <Input addItem={addItem} />
+      </View>
+    </GestureHandlerRootView>
   );
 }
 
@@ -124,5 +109,26 @@ const styles = StyleSheet.create({
     //Needed for status bar color on ios, actual bar color set on view above
     backgroundColor: GlobalStyles.primary,
     // paddingTop: Platform.OS === 'android' ? Constants.statusBarHeight : Constants.statusBarHeight - 15,
+  },
+  background: { backgroundColor: GlobalStyles.white2, flex: 1 },
+  scrollView: { flex: 1, marginTop: 12 },
+  lottie: { width: '98%', aspectRatio: 1, marginTop: 20 },
+  adjustHeader: { height: Platform.OS === 'android' ? Constants.statusBarHeight + 50 : 0 },
+  itemWrapper: {
+    flex: 1,
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+    opacity: 0.75,
+  },
+  text: {
+    justifyContent: 'center',
+    alignSelf: 'center',
+    marginTop: 60,
+    fontSize: 22,
+    fontWeight: '600',
+    opacity: 0.8,
+    letterSpacing: 2,
+    alignContent: 'center',
+    alignItems: 'center',
   }
 });
