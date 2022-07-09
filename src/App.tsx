@@ -32,7 +32,7 @@ function App(): React.ReactElement {
         animation: "slide_from_right",
         // TODO: tweak duration (good for now)
         // TODO: fix header title offcenter vertically
-        animationDuration: 135
+        animationDuration: 185
       }}>
 
 

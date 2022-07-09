@@ -69,7 +69,7 @@ export function TodoItem({ route, navigation }: NativeStackScreenProps<Routes, '
 <GestureHandlerRootView  style={styles.container}>
           <StatusBar translucent={true} style="light" backgroundColor={GlobalStyles.primary} />
           {/* sets actual background color */}
-          <View style={{backgroundColor:'#f8f8f8', flex: 1}} >
+          <View style={{backgroundColor: GlobalStyles.white2, flex: 1}} >
             {/* used to be Header component */}
           <View style={{height: Platform.OS === 'android' ? Constants.statusBarHeight + 50 : 0}} />
           {items.length > 0 ? (

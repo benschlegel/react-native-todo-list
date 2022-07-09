@@ -4,5 +4,6 @@ const GlobalStyles = {
   accent: '#F07B3F',
   complimentary: '#FFD460',
   primaryText: '#FFD460',
+  white2: '#f8f8f8',
 };
 export default GlobalStyles;
